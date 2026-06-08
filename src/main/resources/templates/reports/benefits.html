@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficios academicos</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Informe de los beneficios</h1>
+        <p class="muted">Regla demostrativa: puntaje global mayor o igual a 160, Nivel 4 o ingles B2.</p>
+    </section>
+    <table>
+        <tr><th>Estudiante</th><th>Registro</th><th>Puntaje</th><th>Nivel</th><th>Ingles</th><th>Beneficio</th></tr>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.student.fullName()}"></td>
+            <td th:text="${result.registryNumber}"></td>
+            <td th:text="${result.globalScore}"></td>
+            <td th:text="${result.globalLevel}"></td>
+            <td th:text="${result.englishCategory}"></td>
+            <td>Resolucion beneficios Tecnologia e Ingenieria</td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>

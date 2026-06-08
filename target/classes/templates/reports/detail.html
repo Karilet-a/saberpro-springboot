@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe detallado</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Informe detallado</h1>
+        <form th:action="@{/reports/detail}" method="get" class="grid">
+            <div>
+                <label>Cedula</label>
+                <input name="document" th:value="${document}" placeholder="1001">
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <button type="submit">Buscar</button>
+            </div>
+        </form>
+    </section>
+    <section class="panel" th:if="${student != null}">
+        <h2 th:text="${student.fullName()}"></h2>
+        <p th:text="${student.email}"></p>
+        <p th:text="${student.faculty != null ? student.faculty.name : 'Sin facultad'}"></p>
+        <table>
+            <tr><th>Registro</th><th>Puntaje</th><th>Nivel</th><th>Ingles</th><th>Beneficio</th></tr>
+            <tr th:each="result : ${student.results}">
+                <td th:text="${result.registryNumber}"></td>
+                <td th:text="${result.globalScore}"></td>
+                <td th:text="${result.globalLevel}"></td>
+                <td th:text="${result.englishCategory}"></td>
+                <td th:text="${result.qualifiesForBenefit() ? 'Aplica' : 'No aplica'}"></td>
+            </tr>
+        </table>
+    </section>
+</main>
+</body>
+</html>

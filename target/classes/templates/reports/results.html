@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados detallados</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Resultados detallados</h1>
+        <form th:action="@{/reports/results}" method="get" class="grid">
+            <div>
+                <label>Cedula</label>
+                <input name="document" th:value="${document}" placeholder="Opcional">
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <button type="submit">Consultar</button>
+            </div>
+        </form>
+    </section>
+    <table>
+        <tr>
+            <th>Estudiante</th><th>Global</th><th>Com. escrita</th><th>Razonamiento</th><th>Lectura</th><th>Ciudadanas</th><th>Ingles</th><th>Proyectos</th><th>Mat. estadistica</th><th>Software</th>
+        </tr>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.student.fullName()}"></td>
+            <td th:text="${result.globalScore + ' ' + result.globalLevel}"></td>
+            <td th:text="${result.writtenCommunication + ' ' + result.writtenCommunicationLevel}"></td>
+            <td th:text="${result.quantitativeReasoning + ' ' + result.quantitativeReasoningLevel}"></td>
+            <td th:text="${result.criticalReading + ' ' + result.criticalReadingLevel}"></td>
+            <td th:text="${result.citizenCompetencies + ' ' + result.citizenCompetenciesLevel}"></td>
+            <td th:text="${result.english + ' ' + result.englishCategory}"></td>
+            <td th:text="${result.engineeringProjects + ' ' + result.engineeringProjectsLevel}"></td>
+            <td th:text="${result.mathStatistics + ' ' + result.mathStatisticsLevel}"></td>
+            <td th:text="${result.softwareDesign + ' ' + result.softwareDesignLevel}"></td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>

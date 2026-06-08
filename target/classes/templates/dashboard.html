@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Saber Pro</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+
+<header class="dashboard-hero">
+    <div class="hero-logo">
+        <img th:src="@{/img/logo-uts.png}" alt="UTS">
+    </div>
+    <h1 sec:authorize="hasRole('ADMINISTRADOR')">Panel del Administrador</h1>
+    <h1 sec:authorize="hasRole('COORDINACION')">Panel del Coordinador</h1>
+    <h1 sec:authorize="hasRole('DOCENTE')">Panel del Docente</h1>
+    <h1 sec:authorize="hasRole('ESTUDIANTE')">Panel del Estudiante</h1>
+    <p th:text="${username}">usuario</p>
+    <span class="hero-badge">Seguimiento de resultados Saber Pro</span>
+</header>
+
+<main class="container">
+    <h2 class="section-title">Estadisticas Generales</h2>
+    <section class="stats-grid">
+        <article class="stat-card red-card">
+            <strong th:text="${studentsCount}">0</strong>
+            <span>Total estudiantes</span>
+        </article>
+        <article class="stat-card green-card">
+            <strong th:text="${resultsCount}">0</strong>
+            <span>Con resultados</span>
+        </article>
+        <article class="stat-card orange-card">
+            <strong th:text="${studentsCount - resultsCount < 0 ? 0 : studentsCount - resultsCount}">0</strong>
+            <span>Sin resultados</span>
+        </article>
+    </section>
+
+    <h2 class="section-title">Opciones de Gestion</h2>
+    <section class="action-grid">
+        <a class="action-card" th:href="@{/admin/catalogs}" sec:authorize="hasRole('ADMINISTRADOR')">
+            <span class="action-icon">UTS</span>
+            <strong>Administracion</strong>
+            <small>Facultades, directores y docentes</small>
+        </a>
+
+        <a class="action-card" th:href="@{/students}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION')">
+            <span class="action-icon">CRUD</span>
+            <strong>Gestion de Alumnos</strong>
+            <small>Crear, editar y aprobar estudiantes Saber Pro</small>
+        </a>
+
+        <a class="action-card" th:href="@{/reports}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION','DOCENTE')">
+            <span class="action-icon">INF</span>
+            <strong>Informe General</strong>
+            <small>Listado total de estudiantes y resultados</small>
+        </a>
+
+        <a class="action-card" th:href="@{/reports/detail}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION','DOCENTE')">
+            <span class="action-icon">CED</span>
+            <strong>Consulta por Cedula</strong>
+            <small>Informe detallado de un estudiante</small>
+        </a>
+
+        <a class="action-card" th:href="@{/reports/faculty}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION','DOCENTE')">
+            <span class="action-icon">FAC</span>
+            <strong>Consulta por Facultad</strong>
+            <small>Resultados filtrados por programa o facultad</small>
+        </a>
+
+        <a class="action-card" th:href="@{/reports/benefits}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION','DOCENTE')">
+            <span class="action-icon">BEN</span>
+            <strong>Informe de Beneficios</strong>
+            <small>Estudiantes que aplican a beneficios academicos</small>
+        </a>
+
+        <a class="action-card" th:href="@{/student}" sec:authorize="hasRole('ESTUDIANTE')">
+            <span class="action-icon">MI</span>
+            <strong>Mi Portal</strong>
+            <small>Datos personales, pago y resultados</small>
+        </a>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe general</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Informe General</h1>
+        <p class="muted">Promedio global: <strong th:text="${#numbers.formatDecimal(average, 1, 2)}"></strong></p>
+        <p>
+            <a th:href="@{/reports/detail}">Informe detallado</a> |
+            <a th:href="@{/reports/results}">Resultados detallados</a> |
+            <a th:href="@{/reports/benefits}">Beneficios</a> |
+            <a th:href="@{/reports/faculty}">Por facultad</a>
+        </p>
+    </section>
+    <table>
+        <thead>
+        <tr>
+            <th>Registro</th>
+            <th>Estudiante</th>
+            <th>Puntaje</th>
+            <th>Nivel</th>
+            <th>Ingles</th>
+            <th>Diseno software</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.registryNumber}"></td>
+            <td th:text="${result.student.fullName()}"></td>
+            <td th:text="${result.globalScore}"></td>
+            <td th:text="${result.globalLevel}"></td>
+            <td th:text="${result.englishCategory}"></td>
+            <td th:text="${result.softwareDesign + ' / ' + result.softwareDesignLevel}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

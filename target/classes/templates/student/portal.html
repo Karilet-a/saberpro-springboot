@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard estudiante</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Dashboard de Estudiante</h1>
+        <p class="muted">Datos personales, cargue de pago, ultimo resultado y beneficios academicos.</p>
+    </section>
+    <section class="grid">
+        <article class="panel">
+            <h2>Datos personales</h2>
+            <p><strong th:text="${student.fullName()}"></strong></p>
+            <p th:text="${student.documentType + ' ' + student.documentNumber}"></p>
+            <p th:text="${student.email}"></p>
+            <p th:text="${student.faculty != null ? student.faculty.name : 'Sin facultad'}"></p>
+        </article>
+        <article class="panel">
+            <h2>Cargue Pago Saber Pro</h2>
+            <p th:text="${student.paymentUploaded ? 'Pago registrado: ' + student.paymentReference : 'Pago pendiente'}"></p>
+            <form th:action="@{/student/payment}" method="post">
+                <label>Referencia de pago</label>
+                <input name="paymentReference" required>
+                <button type="submit">Registrar pago</button>
+            </form>
+        </article>
+        <article class="panel" th:if="${lastResult != null}">
+            <h2>Ultimo Resultado</h2>
+            <p>Puntaje: <strong th:text="${lastResult.globalScore}"></strong></p>
+            <p>Nivel: <strong th:text="${lastResult.globalLevel}"></strong></p>
+            <p>Ingles: <strong th:text="${lastResult.englishCategory}"></strong></p>
+            <p th:text="${lastResult.qualifiesForBenefit() ? 'Aplica a beneficios academicos' : 'No aplica a beneficios academicos'}"></p>
+        </article>
+    </section>
+    <section class="panel">
+        <h2>Todos los resultados</h2>
+        <table>
+            <tr><th>Año</th><th>Registro</th><th>Puntaje</th><th>Nivel</th><th>Software</th><th>Beneficio</th></tr>
+            <tr th:each="result : ${student.results}">
+                <td th:text="${result.applicationYear}"></td>
+                <td th:text="${result.registryNumber}"></td>
+                <td th:text="${result.globalScore}"></td>
+                <td th:text="${result.globalLevel}"></td>
+                <td th:text="${result.softwareDesign + ' ' + result.softwareDesignLevel}"></td>
+                <td th:text="${result.qualifiesForBenefit() ? 'Si' : 'No'}"></td>
+            </tr>
+        </table>
+    </section>
+</main>
+</body>
+</html>

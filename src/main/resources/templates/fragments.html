@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+<div th:fragment="topbar" class="topbar">
+    <div class="brand-lockup">
+        <img class="brand-mark" th:src="@{/img/logo-uts.png}" alt="UTS">
+        <strong>Saber Pro</strong>
+    </div>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/catalogs}" sec:authorize="hasRole('ADMINISTRADOR')">Administracion</a>
+        <a th:href="@{/students}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION')">Estudiantes</a>
+        <a th:href="@{/reports}" sec:authorize="hasAnyRole('ADMINISTRADOR','COORDINACION','DOCENTE')">Informes</a>
+        <a th:href="@{/student}" sec:authorize="hasRole('ESTUDIANTE')">Mi portal</a>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" class="link-button">Salir</button>
+        </form>
+    </nav>
+</div>
+</body>
+</html>

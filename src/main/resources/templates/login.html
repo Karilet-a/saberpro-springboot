@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saber Pro</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="login-screen">
+<main class="login-shell">
+    <section class="login-brand-panel">
+        <div class="login-logo-card">
+            <img th:src="@{/img/logo-uts.png}" alt="UTS">
+        </div>
+        <h1>Saber Pro</h1>
+        <p>Sistema de Gestion Academica</p>
+    </section>
+
+    <section class="login-form-panel">
+        <h2>Iniciar Sesion</h2>
+        <p class="login-subtitle">Ingresa tus credenciales para continuar</p>
+
+        <form th:action="@{/login}" method="post">
+            <label for="username">Usuario o Correo</label>
+            <input id="username" name="username" type="text" autocomplete="username" required>
+
+            <label for="password">Contrasena</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+            <div class="error" th:if="${param.error}">Usuario o contrasena incorrectos</div>
+            <button type="submit">Iniciar Sesion</button>
+        </form>
+
+        <div class="demo-credentials">
+            <h3>Credenciales de prueba:</h3>
+            <div class="demo-user">
+                <strong>Administrador</strong>
+                <span>Usuario: admin@uts.edu.co</span>
+                <span>Contrasena: admin123</span>
+            </div>
+            <div class="demo-user">
+                <strong>Coordinador</strong>
+                <span>Usuario: coordinador@uts.edu.co</span>
+                <span>Contrasena: admin123</span>
+            </div>
+			<div class="demo-user">
+			    <strong>Docente</strong>
+			    <span>Usuario: docente@uts.edu.co</span>
+			    <span>Contrasena: docente123</span>
+			 </div>
+            <div class="demo-user">
+                <strong>Estudiante</strong>
+                <span>Usuario: estudiante@uts.edu.co</span>
+                <span>Contrasena: 123456</span>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

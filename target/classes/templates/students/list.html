@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar estudiantes</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Gestionar Estudiante</h1>
+        <a class="button" th:href="@{/students/new}">Nuevo estudiante</a>
+    </section>
+    <table>
+        <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Facultad</th>
+            <th>Aprobado</th>
+            <th>Pago</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.documentType + ' ' + student.documentNumber}"></td>
+            <td th:text="${student.fullName()}"></td>
+            <td th:text="${student.faculty != null ? student.faculty.name : 'Sin facultad'}"></td>
+            <td th:text="${student.approvedForSaberPro ? 'Si' : 'No'}"></td>
+            <td th:text="${student.paymentUploaded ? 'Cargado' : 'Pendiente'}"></td>
+            <td>
+                <a th:href="@{/students/{id}/edit(id=${student.id})}">Editar</a>
+                <form th:action="@{/students/{id}/approve(id=${student.id})}" method="post" style="display:inline">
+                    <button type="submit">Aprobar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

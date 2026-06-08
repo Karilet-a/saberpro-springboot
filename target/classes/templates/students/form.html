@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar estudiante</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1 th:text="${student.id == null ? 'Nuevo estudiante' : 'Editar estudiante'}"></h1>
+        <form th:action="@{/students}" th:object="${student}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="grid">
+                <div>
+                    <label>Tipo documento</label>
+                    <input th:field="*{documentType}" required>
+                </div>
+                <div>
+                    <label>Numero documento</label>
+                    <input th:field="*{documentNumber}" required>
+                </div>
+                <div>
+                    <label>Primer nombre</label>
+                    <input th:field="*{firstName}" required>
+                </div>
+                <div>
+                    <label>Segundo nombre</label>
+                    <input th:field="*{secondName}">
+                </div>
+                <div>
+                    <label>Primer apellido</label>
+                    <input th:field="*{firstLastName}" required>
+                </div>
+                <div>
+                    <label>Segundo apellido</label>
+                    <input th:field="*{secondLastName}">
+                </div>
+                <div>
+                    <label>Correo</label>
+                    <input th:field="*{email}" type="email">
+                </div>
+                <div>
+                    <label>Telefono</label>
+                    <input th:field="*{phone}">
+                </div>
+                <div>
+                    <label>Facultad</label>
+                    <select th:field="*{faculty}">
+                        <option th:each="faculty : ${faculties}" th:value="${faculty.id}" th:text="${faculty.name}"></option>
+                    </select>
+                </div>
+            </div>
+            <p>
+                <button type="submit">Guardar</button>
+                <a class="button secondary" th:href="@{/students}">Cancelar</a>
+            </p>
+        </form>
+    </section>
+</main>
+</body>
+</html>

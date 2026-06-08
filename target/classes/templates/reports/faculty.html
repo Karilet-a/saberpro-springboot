@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Por facultad</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: topbar}"></div>
+<main class="container">
+    <section class="panel">
+        <h1>Consulta por Facultad</h1>
+        <form th:action="@{/reports/faculty}" method="get" class="grid">
+            <div>
+                <label>Facultad</label>
+                <select name="facultyId">
+                    <option value="">Todas</option>
+                    <option th:each="faculty : ${faculties}" th:value="${faculty.id}" th:text="${faculty.name}" th:selected="${faculty.id == facultyId}"></option>
+                </select>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <button type="submit">Filtrar</button>
+            </div>
+        </form>
+    </section>
+    <table>
+        <tr><th>Documento</th><th>Nombre</th><th>Facultad</th><th>Aprobado</th></tr>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.documentNumber}"></td>
+            <td th:text="${student.fullName()}"></td>
+            <td th:text="${student.faculty != null ? student.faculty.name : 'Sin facultad'}"></td>
+            <td th:text="${student.approvedForSaberPro ? 'Si' : 'No'}"></td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>
