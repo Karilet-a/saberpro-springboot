@@ -25,7 +25,7 @@ public class SecurityConfig {
                                 "/h2-console/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/students/**").hasAnyRole("ADMINISTRADOR", "COORDINACION")
+                        .requestMatchers("/students/**").hasRole("COORDINACION")
                         .requestMatchers("/reports/**").hasAnyRole("ADMINISTRADOR", "COORDINACION", "DOCENTE")
                         .requestMatchers("/student/**").hasRole("ESTUDIANTE")
                         .anyRequest().authenticated()
